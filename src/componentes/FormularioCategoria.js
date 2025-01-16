@@ -14,7 +14,7 @@ import { HuePicker } from 'react-color';
 import { Table, TableHead, TableBody, TableRow, TableCell, TableContainer, Paper } from '@mui/material';
 import axios from 'axios';
 import { useSnackbar } from "notistack";
-import MyContext from '../Context';
+import MyContext from '../../src/Context';
 import { styled } from '@mui/system';
 
 const theme = createTheme({

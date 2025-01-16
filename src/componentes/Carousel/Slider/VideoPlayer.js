@@ -1,35 +1,21 @@
-import React, { useState, useContext  } from 'react';
+import React, { useContext } from 'react';
 import ReactPlayer from "react-player";
 import styled from "styled-components";
-import { useNavigate} from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import MyContext from '../../../Context';
 
 import Fab from '@mui/material/Fab';
 
-
-
-
-
-
 const VideoContainer = styled.div`
   width: auto;
   height: 80vh;
-  border-radius: 10px;
   position:relative;
   background-color:#191919;
   padding-top:1rem;
- 
-  
 `;
-
-
 
 const StyledPlayer = styled(ReactPlayer)`
    position:relative;
-
-
-  
-  
 `;
 
 const PlayerWrapper = styled.div`
@@ -45,73 +31,39 @@ const PlayerWrapper = styled.div`
       font-size:1.3rem;
       margin-bottom:0.5rem;
     }
+
     & .spinner {
       display: flex;
       justify-content: center;
       align-items: center;
       height: 100%;
       width: 100%;
-      
-
     }
-  
-    opacity: ${(props) => (props.loading ? 0 : 1)};
-    transition: opacity 0.9s ease-in-out;
+`;
 
-    
-`
-
-
-
-const VideoPlayer = ({ videoUrl }) => {
+const VideoPlayer = () => {
   const navigate = useNavigate();
-  const { videoToPlay } = useContext(MyContext);
-  const [loading, setLoading] = useState(true);
-  const volverMain = () =>{
-
-   
-    navigate('/');
-
-  }
-  function handleReady() {
-  
-    setLoading(false);
-  }
-
-
+  const { videoToPlay } = useContext(MyContext); // Obtiene la URL del video desde el contexto
+  console.log("videoToPlay:", videoToPlay);
+  const volverMain = () => {
+    navigate('/'); // Navega al inicio
+  };
 
   return (
     <VideoContainer>
-   
-      <PlayerWrapper loading={loading}>
-
-   
-      
-         {/* {loading && (
-                <div className="spinner">
-                  <PuffLoader color="#123abc" loading={loading} />
-                </div>
-              )} */}
-
-          
-
-            <Fab color="primary" aria-label="add" className="boton" onClick={ () => volverMain()}>
-              X
-            </Fab>
-            <StyledPlayer url={videoToPlay}
-              width="100%" height="100%" onReady={handleReady}
-
-
-            />
-        
-
-
+      <PlayerWrapper>
+        <Fab color="primary" aria-label="add" className="boton" onClick={volverMain}>
+          X
+        </Fab>
+        {/* Verifica si videoToPlay está definido antes de intentar reproducir el video */}
+        {videoToPlay ? (
+          <StyledPlayer url={videoToPlay} width="100%" height="100%" />
+        ) : (
+          <p>No se ha seleccionado un video válido.</p> // Mensaje si no se encuentra una URL válida
+        )}
       </PlayerWrapper>
     </VideoContainer>
   );
 };
 
-
-
-
-export default VideoPlayer
+export default VideoPlayer;
